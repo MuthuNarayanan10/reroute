@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: reroute
+      POSTGRES_PASSWORD: reroute
+      POSTGRES_DB: reroute
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reroute"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: .
+    command: ["node", "dist/api/index.js"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://reroute:reroute@postgres:5432/reroute
+      REDIS_URL: redis://redis:6379
+    ports: ["3000:3000"]
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    profiles: ["full"]
+
+  worker:
+    build: .
+    command: ["node", "dist/workers/index.js"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://reroute:reroute@postgres:5432/reroute
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    profiles: ["full"]
+
+volumes:
+  pgdata:

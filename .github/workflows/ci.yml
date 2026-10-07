@@ -1,0 +1,33 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: reroute
+          POSTGRES_PASSWORD: reroute
+          POSTGRES_DB: reroute_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U reroute" --health-interval 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - name: Unit + integration tests
+        run: npm test
+        env:
+          INTEGRATION_DATABASE_URL: postgres://reroute:reroute@localhost:5432/reroute_test
+      - run: npm run build
+      - run: docker build -t reroute-platform:${{ github.sha }} .
