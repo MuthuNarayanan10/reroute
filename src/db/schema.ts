@@ -184,7 +184,7 @@ export const orders = pgTable(
       .references(() => stores.id, { onDelete: 'cascade' }),
     externalId: text('external_id').notNull(),
     orderNumber: text('order_number'),
-    customerId: uuid('customer_id').references(() => customers.id),
+    customerId: uuid('customer_id').references(() => customers.id, { onDelete: 'set null' }),
     paymentMode: paymentModeEnum('payment_mode').notNull(),
     financialStatus: text('financial_status'),
     status: orderStatusEnum('status').notNull().default('open'),
@@ -271,7 +271,7 @@ export const shipments = pgTable(
       .references(() => stores.id, { onDelete: 'cascade' }),
     orderId: uuid('order_id')
       .notNull()
-      .references(() => orders.id),
+      .references(() => orders.id, { onDelete: 'cascade' }),
     courier: text('courier').notNull(),
     awb: text('awb').notNull(),
     status: shipmentStatusEnum('status').notNull().default('created'),
@@ -313,7 +313,7 @@ export const prepaidConversions = pgTable(
       .references(() => stores.id, { onDelete: 'cascade' }),
     orderId: uuid('order_id')
       .notNull()
-      .references(() => orders.id),
+      .references(() => orders.id, { onDelete: 'cascade' }),
     riskScore: integer('risk_score').notNull(),
     discountPaise: integer('discount_paise').notNull(),
     amountPaise: integer('amount_paise').notNull(),
@@ -340,10 +340,10 @@ export const rerouteCases = pgTable(
       .references(() => stores.id, { onDelete: 'cascade' }),
     shipmentId: uuid('shipment_id')
       .notNull()
-      .references(() => shipments.id),
+      .references(() => shipments.id, { onDelete: 'cascade' }),
     orderId: uuid('order_id')
       .notNull()
-      .references(() => orders.id),
+      .references(() => orders.id, { onDelete: 'cascade' }),
     status: rerouteCaseStatusEnum('status').notNull().default('evaluating'),
     reason: text('reason'),
     offerPricePaise: integer('offer_price_paise'),
@@ -367,7 +367,7 @@ export const rerouteOffers = pgTable(
       .notNull()
       .references(() => rerouteCases.id, { onDelete: 'cascade' }),
     storeId: uuid('store_id').notNull(),
-    checkoutId: uuid('checkout_id').references(() => checkouts.id),
+    checkoutId: uuid('checkout_id').references(() => checkouts.id, { onDelete: 'set null' }),
     phoneE164: text('phone_e164').notNull(),
     distanceKm: doublePrecision('distance_km').notNull(),
     score: doublePrecision('score').notNull(),
@@ -417,3 +417,66 @@ export type Shipment = typeof shipments.$inferSelect;
 export type RerouteCase = typeof rerouteCases.$inferSelect;
 export type RerouteOffer = typeof rerouteOffers.$inferSelect;
 export type Customer = typeof customers.$inferSelect;
+
+// ---------- seller accounts ----------
+export const memberRoleEnum = pgEnum('member_role', ['owner', 'admin', 'viewer']);
+
+export const users = pgTable(
+  'users',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    /** Always stored lower-cased and trimmed. */
+    email: text('email').notNull(),
+    name: text('name').notNull(),
+    passwordHash: text('password_hash').notNull(),
+    lastLoginAt: timestamp('last_login_at', { withTimezone: true }),
+    ...timestamps,
+  },
+  (t) => [uniqueIndex('users_email_uq').on(t.email)],
+);
+
+/** Server-side sessions. The cookie holds a random token; only its SHA-256 is stored. */
+export const sessions = pgTable(
+  'sessions',
+  {
+    id: text('id').primaryKey(),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    userAgent: text('user_agent'),
+    ip: text('ip'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('sessions_user_idx').on(t.userId)],
+);
+
+export const storeMembers = pgTable(
+  'store_members',
+  {
+    storeId: uuid('store_id')
+      .notNull()
+      .references(() => stores.id, { onDelete: 'cascade' }),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    role: memberRoleEnum('role').notNull().default('owner'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.storeId, t.userId] }), index('store_members_user_idx').on(t.userId)],
+);
+
+/** Early-access requests from the marketing site. */
+export const leads = pgTable('leads', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: text('name').notNull(),
+  email: text('email').notNull(),
+  phone: text('phone'),
+  company: text('company'),
+  monthlyOrders: text('monthly_orders'),
+  platform: text('platform'),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+export type User = typeof users.$inferSelect;
+export type MemberRole = (typeof memberRoleEnum.enumValues)[number];

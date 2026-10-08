@@ -50,6 +50,25 @@ flowchart LR
   RR --> SH
 ```
 
+## Web layer
+- **Marketing site** (`web/index.html`, `privacy.html`, `terms.html`, `404.html`): plain HTML + CSS + a tiny script,
+  built by Vite. Static, fast, indexable. The early-access form posts to `/public/leads`.
+- **Seller dashboard** (`web/app.html` → `web/src/app`): React SPA under `/app`, talking only to `/auth` and `/app-api`.
+- **Serving:** `src/api/routes/web.ts` serves `web/dist` from the same Fastify process. Hashed assets are cached for a
+  year; HTML is `no-cache`. Unknown HTML routes get the branded 404. Strict CSP, `X-Frame-Options: DENY`, HSTS in production.
+- **Fonts** are self-hosted (`@fontsource`, latin + latin-ext only — latin-ext carries ₹). No third-party requests.
+
+## Accounts, sessions and tenancy
+- `users` (scrypt password hashes, N=2^15), `sessions` (only the SHA-256 of the cookie token is stored, 30-day expiry,
+  deleted on logout), `store_members` (user ↔ store with role `owner | admin | viewer`), `leads`.
+- `src/api/routes/store-api.ts` is **one** store-scoped API mounted twice with different authorizers:
+  `/api` (internal, API key) and `/app-api` (sellers, session + membership). Non-members get 404, viewers get 403 on writes.
+- CSRF: SameSite=Lax cookie + JSON-only bodies + Origin check on every non-GET (`requireSameOrigin`).
+- Shopify connect: the dashboard asks `/app-api/shopify/connect` for an OAuth URL whose Redis state carries the
+  user id; the callback makes that user the owner. Installs from the Shopify App Store (no session) get a one-time
+  claim token (1 h) and land on `/app/connect?claim=…`, where the logged-in seller links the store.
+- Deleting a store cascades through every store-scoped table (Shopify `shop/redact`), verified by a test.
+
 ## Folder map
 
 | Path | What lives there |
@@ -60,7 +79,9 @@ flowchart LR
 | `src/integrations/*` | Clients for Shopify, Razorpay, WhatsApp, couriers. Only place that calls the outside world. |
 | `src/db` | Drizzle schema, generated SQL migrations, migrator. |
 | `src/lib` | Cross-cutting: env, logging, crypto, money, phone, geo, http retries, metrics, queues. |
-| `tests` | Unit tests (pure logic) + one end-to-end integration test against real Postgres. |
+| `tests` | Unit tests (pure logic) + integration tests against real Postgres (`*.int.test.ts`). |
+| `web/` | Marketing site + seller dashboard (Vite). `web/src/app` is the React dashboard. |
+| `scripts/` | Pincode loader, demo-data seeder. |
 
 ## Queues
 

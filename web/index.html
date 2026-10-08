@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ReRoute — Every parcel finds a buyer</title>
+  <meta name="description" content="ReRoute turns failed COD deliveries into prepaid sales to shoppers nearby, converts risky COD to prepaid before dispatch, and recovers abandoned carts on WhatsApp. Built for Indian D2C sellers." />
+  <meta name="theme-color" content="#0E1B2C" />
+  <meta property="og:title" content="ReRoute — Every parcel finds a buyer" />
+  <meta property="og:description" content="Stop paying for RTO. ReRoute sells failed deliveries to nearby shoppers who already wanted the product — prepaid, delivered next day." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/brand/icon-512.png" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/brand/reroute-icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+  <script type="module" src="/src/site/main.ts"></script>
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="wrap">
+      <a href="/" aria-label="ReRoute home"><img src="/brand/reroute-logo-horizontal-on-dark.svg" alt="ReRoute" width="148" height="37" /></a>
+      <nav class="nav-links" id="nav-links" aria-label="Main">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="/app/login" class="nav-login-mobile">Log in</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="nav-login" href="/app/login">Log in</a>
+        <a class="btn btn-lime btn-sm" href="#early-access">Get early access</a>
+        <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Open menu">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <div class="eyebrow" style="color:var(--rr-lime)">For Indian D2C sellers</div>
+          <h1>Every parcel<br />finds a <em>buyer.</em></h1>
+          <p class="lede">When a COD delivery fails, ReRoute sells that parcel to a shopper nearby who already wanted it — prepaid, delivered next day. No return trip. No lost ad spend.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-lime" href="#early-access">Get early access</a>
+            <a class="btn btn-ghost" href="/app/login">See the live demo</a>
+          </div>
+          <p class="hero-note">Works with Shopify today. WooCommerce, custom sites and marketplaces next.</p>
+        </div>
+
+        <svg class="route-art" viewBox="0 0 900 700" role="img" aria-labelledby="route-title route-desc">
+          <title id="route-title">How a failed delivery gets rerouted</title>
+          <desc id="route-desc">A parcel leaves the warehouse, delivery fails, and instead of returning it is sent to a buyer 2.1 km away.</desc>
+          <path d="M60 600 C 200 600, 220 420, 360 400 S 560 330, 600 250" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="10" stroke-linecap="round"/>
+          <path d="M600 250 C 560 360, 380 470, 200 560 S 90 600, 60 600" fill="none" stroke="#5B6675" stroke-width="5" stroke-dasharray="2 16" stroke-linecap="round"/>
+          <path class="route-reroute" d="M600 250 C 650 170, 720 150, 800 130" fill="none" stroke="#C5F82A" stroke-width="10" stroke-linecap="round"/>
+          <rect x="36" y="576" width="48" height="48" rx="10" fill="#1B2B40" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>
+          <g class="route-fail"><circle cx="600" cy="250" r="26" fill="#FF5B3A"/><path d="M589 239 L611 261 M611 239 L589 261" stroke="#fff" stroke-width="5" stroke-linecap="round"/></g>
+          <circle class="route-ring" cx="800" cy="130" r="52" fill="none" stroke="#C5F82A" stroke-width="2"/>
+          <g class="route-pin"><circle cx="800" cy="130" r="30" fill="#C5F82A"/><circle cx="800" cy="130" r="11" fill="#0E1B2C"/></g>
+          <g font-family="Manrope, sans-serif" font-weight="600" font-size="19">
+            <text x="34" y="662" fill="#fff" fill-opacity=".7" font-family="JetBrains Mono, monospace" font-size="15" font-weight="400">WAREHOUSE · CHENNAI</text>
+            <text class="route-label" style="animation-delay:.5s" x="640" y="262" fill="#FF5B3A">Delivery failed</text>
+            <text class="route-label" style="animation-delay:.6s" x="640" y="286" fill="#fff" fill-opacity=".6" font-family="JetBrains Mono, monospace" font-size="15" font-weight="400">customer refused · COD</text>
+            <text class="route-label" style="animation-delay:.9s" x="226" y="540" fill="#8C96A3" font-family="JetBrains Mono, monospace" font-size="15" font-weight="400">return to origin · 6 days · money lost</text>
+            <text class="route-label" style="animation-delay:2s" x="590" y="44" fill="#C5F82A">Sold nearby · 2.1 km</text>
+            <text class="route-label" style="animation-delay:2.1s" x="590" y="68" fill="#fff" fill-opacity=".6" font-family="JetBrains Mono, monospace" font-size="15" font-weight="400">prepaid · arrives tomorrow</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="The cost of RTO">
+      <div class="wrap">
+        <div class="stat"><b>25–30%</b><span>of COD orders in India return to origin instead of being delivered.<sup>1</sup></span></div>
+        <div class="stat"><b>₹635–₹3,055</b><span>hidden cost of every RTO — ad spend, two-way shipping and handling.<sup>2</sup></span></div>
+        <div class="stat"><b>45%</b><span>of Indian D2C orders are still cash on delivery in 2026.<sup>3</sup></span></div>
+        <p class="stats-src">Sources: <sup>1</sup> <a href="https://razorpay.com/blog/cash-on-delivery/" rel="noopener">Razorpay</a> · <sup>2</sup> <a href="https://www.ithinklogistics.com/blog/what-is-rto-in-ecommerce-and-why-does-it-happen/amp/" rel="noopener">iThink Logistics</a> · <sup>3</sup> <a href="https://base.com/en-IN/blog/?p=22111" rel="noopener">Base.com D2C report 2026</a></p>
+      </div>
+    </section>
+
+    <!-- ================= HOW ================= -->
+    <section class="section" id="how">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow" style="color:var(--rr-slate)">How ReRoute works</div>
+          <h2>A failed delivery is a sale looking for a buyer.</h2>
+          <p>Somewhere near every refused parcel, someone left that exact product in their cart. ReRoute connects the two before the courier sends it back.</p>
+        </div>
+        <ol class="steps" style="list-style:none;padding:0;margin:0">
+          <li class="step">
+            <div class="step-icon" style="background:#FFE3DC"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C2361B" stroke-width="2.2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></div>
+            <h3>Delivery fails</h3>
+            <p>The courier reports an NDR — refused, unreachable, door locked. ReRoute hears it in seconds.</p>
+          </li>
+          <li class="step">
+            <div class="step-icon" style="background:#EEF9D0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0E1B2C" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.2-4.2"/></svg></div>
+            <h3>We find a buyer nearby</h3>
+            <p>Shoppers within 10 km with that product in their cart are ranked by distance, freshness and fit.</p>
+          </li>
+          <li class="step">
+            <div class="step-icon" style="background:#EEF9D0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0E1B2C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></div>
+            <h3>They pay upfront</h3>
+            <p>A WhatsApp offer with a UPI link. The first payer wins; anyone else is refunded automatically.</p>
+          </li>
+          <li class="step done">
+            <div class="step-icon" style="background:var(--rr-lime)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0E1B2C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></div>
+            <h3>Delivered tomorrow</h3>
+            <p>The courier redirects the parcel, a new paid order is created, the old one closes. You keep the sale.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= FEATURES ================= -->
+    <section class="section" id="features" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow" style="color:var(--rr-slate)">One platform</div>
+          <h2>Stop the RTO before it ships. Rescue it if it happens.</h2>
+        </div>
+        <div class="features">
+          <article class="feature hero-feature">
+            <div>
+              <span class="tag">ReRoute engine</span>
+              <h3>Failed parcels sold nearby, not shipped back</h3>
+              <p>Every NDR becomes a live offer to the best nearby shoppers. Courier, payment and store orders are all updated for you.</p>
+              <ul>
+                <li>First-payer-wins with automatic refunds</li>
+                <li>Excluded SKUs and minimum order value you control</li>
+                <li>Every case explained: rescued, expired, no match</li>
+              </ul>
+            </div>
+            <div class="wa-mock" aria-label="Example WhatsApp offer">
+              <div class="wa-msg">Good news! <b>Muslin swaddle – Ocean blue</b> (MRP ₹1,299) is available near you right now. Get it for <b>₹1,169</b> with next-day delivery.<div class="wa-btn">Pay ₹1,169 · arrives tomorrow</div><div class="wa-time">Reply STOP to opt out · 11:42</div></div>
+              <div class="wa-msg me">Paid ✓<div class="wa-time">11:46</div></div>
+            </div>
+          </article>
+          <article class="feature">
+            <span class="tag">COD → prepaid</span>
+            <h3>Risky COD, converted before dispatch</h3>
+            <p>Every COD order gets a 0–100 risk score with plain reasons, learned from your own delivery history. Risky orders get a discounted UPI link on WhatsApp.</p>
+          </article>
+          <article class="feature">
+            <span class="tag">Cart recovery</span>
+            <h3>Abandoned carts, recovered on WhatsApp</h3>
+            <p>Two polite reminders, only to shoppers who opted in. Those carts also become ReRoute’s buyer pool.</p>
+          </article>
+          <article class="feature">
+            <span class="tag">Order sync</span>
+            <h3>Every order, live</h3>
+            <p>Orders, checkouts and courier events stream in real time. Duplicate and out-of-order events are handled safely.</p>
+          </article>
+          <article class="feature">
+            <span class="tag">Your contracts</span>
+            <h3>Keep your courier and gateway</h3>
+            <p>ReRoute sits on top of your Shiprocket account and Razorpay. More couriers are being added.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PREVIEW ================= -->
+    <section class="section preview">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow" style="color:var(--rr-lime)">The dashboard</div>
+          <h2>The number that matters, first.</h2>
+          <p>₹ rescued, parcels that didn’t go back, and the few orders that need you today — on one screen.</p>
+        </div>
+        <div class="dash" aria-label="Dashboard preview with sample numbers">
+          <div class="dash-top"><img src="/brand/reroute-logo-horizontal-on-dark.svg" alt="" height="22" width="88" /><span class="mono">Sample data</span></div>
+          <div class="dash-grid">
+            <div class="kpi lime"><small>₹ rescued · 30 days</small><b>₹3.1L</b><em>262 parcels didn’t go back</em></div>
+            <div class="kpi"><small>COD → prepaid</small><b>58%</b><em>of offers paid</em></div>
+            <div class="kpi"><small>RTO rate</small><b>7.5%</b><em>▼ vs industry 25–30%</em></div>
+            <div class="kpi"><small>Live offers</small><b>5</b><em>buyers nearby now</em></div>
+          </div>
+          <div class="dash-lower">
+            <div class="kpi"><small>Daily ₹ rescued</small>
+              <div class="bars" aria-hidden="true"><i style="height:20%"></i><i style="height:38%"></i><i style="height:0%"></i><i style="height:44%"></i><i style="height:30%"></i><i style="height:52%"></i><i style="height:24%"></i><i style="height:60%"></i><i style="height:41%"></i><i style="height:0%"></i><i style="height:66%"></i><i style="height:48%"></i><i style="height:72%"></i><i style="height:55%"></i><i class="hi" style="height:88%"></i></div>
+            </div>
+            <div class="kpi"><small>Needs action</small>
+              <ul class="feed">
+                <li><span class="dot" style="background:var(--rr-coral)"></span><span>#1348 · NDR · offers live</span><span>2h</span></li>
+                <li><span class="dot" style="background:var(--rr-lime)"></span><span>#1338 · paid · 1.8 km</span><span>now</span></li>
+                <li><span class="dot" style="background:#F5B83D"></span><span>#1375 · risk 72 · COD</span><span>3h</span></li>
+                <li><span class="dot" style="background:#8C96A3"></span><span>#1329 · no match · RTO</span><span>5h</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TRUST ================= -->
+    <section class="section" aria-labelledby="trust-h">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow" style="color:var(--rr-slate)">Built to be trusted</div><h2 id="trust-h">Your customers’ data stays safe.</h2></div>
+        <div class="trust">
+          <div><h3>Consent first</h3><p>Marketing messages only go to shoppers who opted in, and STOP is honoured. Designed around India’s DPDP Act.</p></div>
+          <div><h3>Encrypted & isolated</h3><p>Store credentials are encrypted at rest. Every query is scoped to your store, and no other seller can see your data.</p></div>
+          <div><h3>Money handled safely</h3><p>Only one buyer can win a parcel. Late payments are refunded automatically, and every action is audited.</p></div>
+          <div><h3>Delete on request</h3><p>Customer and store erasure requests are handled automatically, including Shopify’s mandatory privacy webhooks.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRICING ================= -->
+    <section class="section" id="pricing" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow" style="color:var(--rr-slate)">Early-access pricing</div><h2>Pay when we save you money.</h2></div>
+        <div class="plans">
+          <div class="plan">
+            <h3>Pilot</h3>
+            <div class="price">₹0 <small>for 3 months</small></div>
+            <div class="per">+ ₹40 per rescued parcel</div>
+            <ul><li>Up to 500 orders / month</li><li>ReRoute + COD → prepaid</li><li>WhatsApp cart recovery</li><li>Shopify + Shiprocket</li></ul>
+            <a class="btn btn-ink" href="#early-access">Join the pilot</a>
+          </div>
+          <div class="plan featured">
+            <span class="badge">MOST POPULAR</span>
+            <h3>Growth</h3>
+            <div class="price">₹5,999 <small>/ month</small></div>
+            <div class="per">+ ₹40 per rescued parcel</div>
+            <ul><li>Up to 10,000 orders / month</li><li>Everything in Pilot</li><li>Team seats with roles</li><li>Priority onboarding</li></ul>
+            <a class="btn btn-lime" href="#early-access">Get early access</a>
+          </div>
+          <div class="plan">
+            <h3>Scale</h3>
+            <div class="price">Custom</div>
+            <div class="per">For 10,000+ orders / month</div>
+            <ul><li>Multiple stores & brands</li><li>Custom courier integrations</li><li>Dedicated success manager</li><li>SLA & security review</li></ul>
+            <a class="btn btn-ink" href="#early-access">Talk to us</a>
+          </div>
+        </div>
+        <p class="plans-note">Prices exclude GST. You only pay the per-parcel fee when a parcel is actually delivered to a new buyer.</p>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section" id="faq" style="padding-top:0">
+      <div class="wrap faq">
+        <div class="section-head" style="margin:0"><div class="eyebrow" style="color:var(--rr-slate)">FAQ</div><h2>Questions sellers ask.</h2></div>
+        <div>
+          <details><summary>Does it work with my courier?</summary><p>Today ReRoute works with Shiprocket, which covers most Indian courier networks. Redirecting a parcel to a new buyer needs consignee-change support on your account. We help you set this up during onboarding.</p></details>
+          <details><summary>What happens to the original customer?</summary><p>Nothing is charged. ReRoute only rescues unpaid COD parcels that the customer refused or couldn’t receive. The original order is cancelled, and the parcel goes to someone who paid upfront.</p></details>
+          <details><summary>What if two buyers pay for the same parcel?</summary><p>The first valid payment wins. Every other offer link is cancelled, and anyone who paid late is refunded automatically through Razorpay.</p></details>
+          <details><summary>Do I need Shopify?</summary><p>Shopify is supported today. WooCommerce and custom websites are next, then Amazon and Flipkart for listing and inventory sync.</p></details>
+          <details><summary>Is my customers’ data safe?</summary><p>Yes. Store credentials are encrypted, every store’s data is isolated, and offers only go to shoppers who opted in to WhatsApp. Customers can ask for their data to be deleted at any time.</p></details>
+          <details><summary>How long does setup take?</summary><p>Connecting Shopify takes about two minutes. Adding your courier and Razorpay webhooks takes about fifteen. We do it with you on a call.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EARLY ACCESS ================= -->
+    <section class="section cta" id="early-access">
+      <div class="wrap">
+        <div>
+          <div class="eyebrow">Early access</div>
+          <h2 style="margin-top:14px">Turn your next RTO into a sale.</h2>
+          <p class="lede">We’re onboarding a small group of D2C brands for the pilot. Tell us about your store and we’ll get back to you within two working days.</p>
+        </div>
+        <form class="form on-light" id="lead-form" novalidate>
+          <div class="row">
+            <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required maxlength="100" /></div>
+            <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="254" /></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="f-company">Brand / store</label><input id="f-company" name="company" autocomplete="organization" maxlength="120" /></div>
+            <div class="field"><label for="f-phone">WhatsApp number <span style="font-weight:400;color:var(--rr-slate)">(optional)</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" /></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="f-orders">Orders per month</label>
+              <select id="f-orders" name="monthlyOrders"><option value="">Select</option><option value="<500">Under 500</option><option value="500-2k">500 – 2,000</option><option value="2k-10k">2,000 – 10,000</option><option value="10k+">10,000+</option></select></div>
+            <div class="field"><label for="f-platform">Store platform</label>
+              <select id="f-platform" name="platform"><option value="">Select</option><option value="shopify">Shopify</option><option value="woocommerce">WooCommerce</option><option value="custom">Custom website</option><option value="marketplace">Marketplaces only</option><option value="other">Other</option></select></div>
+          </div>
+          <div class="hp" aria-hidden="true"><label for="f-website">Leave empty</label><input id="f-website" name="website" tabindex="-1" autocomplete="off" /></div>
+          <button class="btn btn-ink" type="submit">Request early access</button>
+          <p class="form-msg" id="lead-msg" role="status" aria-live="polite"></p>
+          <small>By submitting you agree to be contacted about ReRoute. See our <a href="/privacy">privacy policy</a>.</small>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div style="max-width:360px">
+        <img src="/brand/reroute-logo-horizontal-on-dark.svg" alt="ReRoute" width="132" height="33" />
+        <p style="margin-top:14px">Every parcel finds a buyer.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="/app/login">Log in</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a>
+      </nav>
+      <div class="legal"><span>© <span data-year>2026</span> ReRoute. Made in Bengaluru.</span><span>Shopify, Shiprocket, Razorpay and WhatsApp are trademarks of their owners.</span></div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -8,6 +8,20 @@
       "when": 1791401489540,
       "tag": "0000_init",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791482448521,
+      "tag": "0001_accounts",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791482755726,
+      "tag": "0002_store_delete_cascade",
+      "breakpoints": true
     }
   ]
 }

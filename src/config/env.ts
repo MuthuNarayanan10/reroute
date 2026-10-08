@@ -19,6 +19,10 @@ const schema = z.object({
   REDIS_URL: z.string().min(1),
   ENCRYPTION_KEY: z.string().regex(/^[0-9a-f]{64}$/i, 'ENCRYPTION_KEY must be 64 hex chars'),
   ADMIN_API_KEYS: csv,
+  /** Extra origins allowed to call /auth and /app-api (e.g. the Vite dev server). APP_URL is always allowed. */
+  ALLOWED_ORIGINS: csv,
+  /** Folder with the built website + dashboard (npm run build:web). */
+  WEB_DIST: z.string().default('web/dist'),
 
   SHOPIFY_API_KEY: z.string().min(1),
   SHOPIFY_API_SECRET: z.string().min(1),

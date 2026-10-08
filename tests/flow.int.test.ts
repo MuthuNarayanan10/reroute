@@ -233,7 +233,7 @@ run('full flow: order -> COD risk -> NDR -> ReRoute -> delivered', () => {
     expect(res.json().reroute).toMatchObject({ parcelsRescued: 1, revenueRecoveredPaise: 116900 });
 
     const list = await app.inject({ method: 'GET', url: `/api/stores/${storeId}/orders`, headers: { 'x-api-key': 'test-admin-key' } });
-    expect(list.json()[0].customer).toBe('P. S.'); // masked
+    expect(list.json().items[0].customer).toBe('P. S.'); // masked
     await app.close();
   });
 

@@ -1,0 +1,39 @@
+/* ReRoute brand tokens v1.0 — drop into any web app or Shopify theme */
+
+:root {
+  /* Core palette */
+  --rr-ink: #0E1B2C;        /* Route Ink — the network. 55% of any layout */
+  --rr-ink-2: #1B2B40;      /* raised surfaces on dark UI */
+  --rr-lime: #C5F82A;       /* Rescue Lime — good outcomes only. Never text on white */
+  --rr-coral: #FF5B3A;      /* Signal Coral — failures/alerts only. Text only on Ink or as large text */
+  --rr-kraft: #E9DCC6;      /* Parcel Kraft — warmth, packaging */
+  --rr-paper: #F7F5F0;      /* Paper — light canvas */
+  --rr-slate: #5B6675;      /* secondary text on Paper/white (5.4:1) */
+  --rr-mist: #DCE1E7;       /* hairlines, borders */
+
+  /* Semantic */
+  --rr-bg: var(--rr-paper);
+  --rr-text: var(--rr-ink);
+  --rr-text-muted: var(--rr-slate);
+  --rr-success: var(--rr-lime);   /* pair with --rr-ink text */
+  --rr-danger: var(--rr-coral);   /* pair with --rr-ink text */
+
+  /* Typography */
+  --rr-font-display: 'Unbounded', system-ui, sans-serif;
+  --rr-font-text: 'Manrope', system-ui, sans-serif;
+  --rr-font-data: 'JetBrains Mono', 'Manrope', ui-monospace, monospace; /* Manrope supplies ₹ */
+
+  --rr-text-display: 600 84px/1.0 var(--rr-font-display);
+  --rr-text-h1: 600 48px/1.05 var(--rr-font-display);
+  --rr-text-h2: 500 32px/1.15 var(--rr-font-display);
+  --rr-text-body: 400 17px/1.6 var(--rr-font-text);
+  --rr-text-label: 600 14px/1.4 var(--rr-font-text);
+  --rr-text-data: 500 14px/1.4 var(--rr-font-data);
+  --rr-tracking-display: -0.02em;
+
+  /* Shape */
+  --rr-radius-sm: 6px;
+  --rr-radius: 10px;
+  --rr-radius-lg: 18px;
+  --rr-radius-icon: 23%;    /* app-icon tile corner, matches the logo */
+}

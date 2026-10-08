@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy policy — ReRoute</title>
+  <meta name="description" content="How ReRoute collects, uses and protects seller and shopper data." />
+  <meta name="theme-color" content="#0E1B2C" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/brand/reroute-icon.svg" type="image/svg+xml" />
+  <script type="module" src="/src/site/main.ts"></script>
+</head>
+<body>
+  <header class="nav"><div class="wrap">
+    <a href="/" aria-label="ReRoute home"><img src="/brand/reroute-logo-horizontal-on-dark.svg" alt="ReRoute" width="148" height="37" /></a>
+    <div class="nav-cta"><a class="nav-login" href="/app/login" style="display:block">Log in</a><a class="btn btn-lime btn-sm" href="/#early-access">Get early access</a></div>
+  </div></header>
+
+  <main class="legal-page" id="main"><div class="wrap">
+    <div class="eyebrow" style="color:var(--rr-slate)">Legal</div>
+    <h1 style="margin-top:12px">Privacy policy</h1>
+    <p style="margin-top:12px;color:var(--rr-slate)">Last updated: 8 October 2026</p>
+    <p class="draft-note"><b>Draft for legal review.</b> This page is a starting template written for ReRoute’s actual data flows. Have a lawyer review it, and fill in the bracketed company details, before going live.</p>
+
+    <h2>Who we are</h2>
+    <p>ReRoute (“we”, “us”) is operated by [Company legal name], [registered address], India. We provide software to online sellers (“Sellers”) that syncs their orders, reduces cash-on-delivery returns and redirects failed deliveries to nearby shoppers.</p>
+    <p>For shopper data that a Seller shares with us, the Seller is the <b>data fiduciary</b> and ReRoute acts as their <b>data processor</b> under India’s Digital Personal Data Protection Act, 2023 (DPDP Act). For Seller account data, ReRoute is the data fiduciary.</p>
+
+    <h2>What we collect</h2>
+    <ul>
+      <li><b>Seller accounts:</b> name, email address, a password stored only as a one-way hash, and login sessions (device and IP).</li>
+      <li><b>Store data from connected platforms:</b> orders, order items, abandoned checkouts, shipping addresses, phone numbers and marketing-consent flags, as provided by the Seller’s store platform (e.g. Shopify).</li>
+      <li><b>Delivery data:</b> courier tracking events, delivery outcomes and failed-delivery reasons.</li>
+      <li><b>Payment references:</b> payment-link and payment IDs from Razorpay. We never see or store card, UPI PIN or bank details.</li>
+      <li><b>Website enquiries:</b> details you submit in our early-access form.</li>
+    </ul>
+
+    <h2>How we use it</h2>
+    <ul>
+      <li>To show Sellers their orders, delivery outcomes and savings.</li>
+      <li>To score COD orders for return risk and offer prepaid payment links to the buyer of that order.</li>
+      <li>To offer a failed-delivery parcel to nearby shoppers who previously showed interest in the same product <b>and who opted in to marketing messages</b>.</li>
+      <li>To send WhatsApp messages on the Seller’s behalf. Every marketing message includes an opt-out, and replying STOP is honoured.</li>
+      <li>To secure the service, prevent fraud and meet legal obligations.</li>
+    </ul>
+    <p>We do not sell personal data, and we do not use one Seller’s shopper data for another Seller.</p>
+
+    <h2>Sharing</h2>
+    <p>We share data only with the service providers needed to run ReRoute: hosting ([cloud provider, region]), the Seller’s store platform, courier partners (to redirect a parcel), Razorpay (payment links and refunds) and Meta’s WhatsApp Business Platform (messages). Each processes data only on our instructions.</p>
+
+    <h2>Retention</h2>
+    <p>Store data is kept while the Seller’s account is active. When a Seller uninstalls ReRoute, Shopify instructs us to delete their store data and we erase it. Order records needed for tax and accounting are kept in anonymised form where the law requires.</p>
+
+    <h2>Your rights</h2>
+    <p>Under the DPDP Act you may ask to access, correct or erase your personal data, withdraw consent and nominate another person to exercise these rights. Shoppers should contact the Seller they bought from. We will also act on requests sent to us directly and forward them to the Seller.</p>
+
+    <h2>Security</h2>
+    <p>Store access tokens are encrypted at rest (AES-256-GCM). Passwords are hashed with scrypt. All traffic is encrypted in transit. Each Seller’s data is isolated, and access is logged.</p>
+
+    <h2>Grievance officer</h2>
+    <p>[Name], Grievance Officer, [Company legal name]. Email: [privacy@yourdomain]. We respond within the time limits set by law.</p>
+  </div></main>
+  <footer class="footer"><div class="wrap">
+    <img src="/brand/reroute-logo-horizontal-on-dark.svg" alt="ReRoute" width="132" height="33" />
+    <nav aria-label="Footer"><a href="/">Home</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/app/login">Log in</a></nav>
+    <div class="legal"><span>© <span data-year>2026</span> ReRoute. Made in Bengaluru.</span></div>
+  </div></footer>
+</body>
+</html>

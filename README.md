@@ -1,11 +1,23 @@
 # ReRoute Platform
 
-AI commerce backend for Indian D2C sellers. It syncs Shopify orders, converts risky COD orders to prepaid,
+The complete ReRoute product: **marketing website + seller dashboard + backend**, deployed as one app.
+AI commerce platform for Indian D2C sellers. It syncs Shopify orders, converts risky COD orders to prepaid,
 recovers abandoned carts on WhatsApp — and **rescues failed deliveries** by selling the parcel to a nearby
 shopper who wanted the same product, instead of sending it back to the warehouse.
 
-**Tests:** 56 unit + 12 end-to-end steps against real Postgres. **Stack:** TypeScript, Fastify, PostgreSQL
-(Drizzle), Redis + BullMQ, Docker.
+**Tests:** 82 (unit + integration against real Postgres: order→ReRoute flow, accounts, tenant isolation, roles, CSRF).
+**Stack:** TypeScript · Fastify · PostgreSQL (Drizzle) · Redis + BullMQ · React + Vite · Docker.
+
+| URL | What |
+|---|---|
+| `/` | Marketing site (static HTML, SEO-friendly): hero, how it works, features, pricing, FAQ, early-access form |
+| `/privacy`, `/terms` | Legal pages (**drafts — have a lawyer review and fill in company details**) |
+| `/app/login`, `/app/signup` | Seller accounts (email + password, server-side sessions) |
+| `/app` | Dashboard: ₹ rescued, COD→prepaid, RTO rate, daily chart, failed deliveries, risky COD |
+| `/app/orders` | Orders with risk score + reasons, filters, search, paging |
+| `/app/reroute` | Every ReRoute case and its outcome |
+| `/app/settings` | Thresholds, discounts, excluded SKUs (owners/admins; viewers read-only) |
+| `/app/connect` | Connect Shopify, webhook URLs to paste, manual AWB tracking |
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how it fits together.
 
@@ -20,9 +32,15 @@ docker compose up -d          # Postgres + Redis
 npm run db:migrate            # create tables
 npm run db:seed-pincodes -- data/pincodes.csv   # India Post pincode lat/long CSV (data.gov.in)
 
-npm run dev:api               # terminal 1 — http://localhost:3000
+npm run seed:demo             # optional: demo store + login (demo@reroute.example / Reroute-demo-2026)
+
+npm run dev:api               # terminal 1 — API on http://localhost:3000
 npm run dev:worker            # terminal 2 — background jobs
+npm run dev:web               # terminal 3 — website + dashboard with hot reload on http://localhost:5173
 ```
+
+Open http://localhost:5173 (site) and http://localhost:5173/app (dashboard). In production the API serves the
+built site itself (`npm run build` → one container), so there is no separate frontend host.
 
 Expose your local API with a tunnel (e.g. `cloudflared tunnel --url http://localhost:3000`), put the
 URL in `APP_URL`, and set the same URL as the app URL + redirect URL
@@ -55,9 +73,28 @@ npm run typecheck
 | Razorpay | `<APP_URL>/webhooks/razorpay` — events: `payment_link.paid`, `payment_link.expired`, `payment_link.cancelled` |
 | Shiprocket | `<APP_URL>/webhooks/courier/shiprocket` — token = `COURIER_WEBHOOK_SECRET` |
 
-## Admin API (for the dashboard)
+## Seller API (used by the dashboard)
 
-All routes need `x-api-key: <one of ADMIN_API_KEYS>` and are scoped to one store.
+Cookie session (`rr_session`, HttpOnly, Secure in production, SameSite=Lax) + same-origin check on every write.
+
+| Method | Path | Purpose |
+|---|---|---|
+| POST | `/auth/signup`, `/auth/login`, `/auth/logout` | Accounts (rate-limited 10/min) |
+| GET | `/app-api/me` | Current user + stores they belong to |
+| POST | `/app-api/shopify/connect` | Start Shopify OAuth bound to this user |
+| POST | `/app-api/stores/claim` | Link a store installed from the Shopify App Store |
+| GET | `/app-api/stores/:id/overview` | KPIs, 30-day series, needs-action lists |
+| GET/PATCH | `/app-api/stores/:id`, `/settings` | Store info and settings |
+| GET | `/app-api/stores/:id/orders?view=&q=&limit=&offset=` | Orders |
+| GET | `/app-api/stores/:id/reroute/cases?status=` | ReRoute cases |
+| POST | `/app-api/stores/:id/shipments` | Track an AWB `{orderNumber, courier, awb}` |
+| POST | `/public/leads` | Early-access form (rate-limited, honeypot) |
+
+A store you are not a member of always returns **404** (its existence is never revealed). Viewers get 403 on writes.
+
+## Internal admin API (ops only)
+
+Same store routes under `/api/...` with `x-api-key: <one of ADMIN_API_KEYS>`; full access to every store.
 
 | Method | Path | Purpose |
 |---|---|---|
@@ -71,7 +108,8 @@ All routes need `x-api-key: <one of ADMIN_API_KEYS>` and are scoped to one store
 Ops endpoints: `GET /health`, `GET /ready`, `GET /metrics` (Prometheus).
 
 ## Deploying
-Build one image, run it twice: `node dist/api/index.js` (API) and `node dist/workers/index.js` (workers).
+Build one image (`docker build .` — it builds API, workers **and** the website), run it twice:
+`node dist/api/index.js` (API + website) and `node dist/workers/index.js` (workers).
 Run `node dist/db/migrate.js` once per release before rolling out. Use managed Postgres + Redis (AWS RDS +
 ElastiCache, or equivalents). `docker compose --profile full up` runs the whole stack locally.
 

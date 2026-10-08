@@ -10,20 +10,28 @@
   "scripts": {
     "dev:api": "tsx watch src/api/index.ts",
     "dev:worker": "tsx watch src/workers/index.ts",
-    "build": "tsc -p tsconfig.build.json && cp -r src/db/migrations dist/db/",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp -r src/db/migrations dist/db/ && npm run build:web",
     "start:api": "node dist/api/index.js",
     "start:worker": "node dist/workers/index.js",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p web/tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/db/migrate.ts",
     "db:seed-pincodes": "tsx scripts/load-pincodes.ts",
-    "test:integration": "INTEGRATION_DATABASE_URL=${INTEGRATION_DATABASE_URL:-postgres://reroute:reroute@localhost:5432/reroute_test} vitest run tests/flow.int.test.ts"
+    "test:integration": "INTEGRATION_DATABASE_URL=${INTEGRATION_DATABASE_URL:-postgres://reroute:reroute@localhost:5432/reroute_test} vitest run tests/*.int.test.ts",
+    "seed:demo": "tsx scripts/seed-demo.ts",
+    "dev:web": "vite --config web/vite.config.ts",
+    "build:web": "vite build --config web/vite.config.ts"
   },
   "dependencies": {
+    "@fastify/cookie": "^11.1.3",
     "@fastify/rate-limit": "^10.1.1",
     "@fastify/sensible": "^6.0.1",
+    "@fastify/static": "^8.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/manrope": "^5.3.0",
+    "@fontsource/unbounded": "^5.3.0",
     "bullmq": "^5.30.0",
     "drizzle-orm": "^0.36.4",
     "fastify": "^5.1.0",
@@ -32,15 +40,22 @@
     "pg": "^8.13.1",
     "pino": "^9.5.0",
     "prom-client": "^15.1.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.6",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",
     "@types/pg": "^8.11.10",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
     "drizzle-kit": "^0.28.1",
     "pino-pretty": "^13.0.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
+    "vite": "^5.4.21",
     "vitest": "^2.1.8"
   }
 }
