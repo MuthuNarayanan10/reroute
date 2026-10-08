@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
-import { env } from '../../config/env.js';
+import { env, integrations } from '../../config/env.js';
 import { randomToken } from '../../lib/crypto.js';
 import { redis } from '../../lib/redis.js';
 import { buildInstallUrl, isValidShopDomain } from '../../integrations/shopify/oauth.js';
@@ -81,7 +81,7 @@ export async function accountRoutes(app: FastifyInstance) {
   await app.register(async (sub) => {
     sub.addHook('preHandler', requireUser);
 
-    sub.get('/me', async (req) => ({ user: publicUser(req.user!), stores: await storesForUser(req.user!.id) }));
+    sub.get('/me', async (req) => ({ user: publicUser(req.user!), stores: await storesForUser(req.user!.id), integrations: integrations() }));
 
     /** Start "Connect Shopify" from the dashboard: returns the Shopify OAuth URL bound to this user. */
     sub.post('/shopify/connect', async (req, reply) => {

@@ -94,6 +94,9 @@ export function Connect() {
               ))}
             </ul>
           ) : <p style={{ color: 'var(--rr-slate)' }}>No store connected yet.</p>}
+          {me?.integrations && !me.integrations.shopify ? (
+            <div className="banner info" role="note">Shopify isn’t set up on this server yet. Add <code className="mono">SHOPIFY_API_KEY</code> and <code className="mono">SHOPIFY_API_SECRET</code> in your hosting settings (see DEPLOY.md, step 6).</div>
+          ) : null}
           <form onSubmit={connect} className="form-grid on-light" noValidate>
             <div className="field">
               <label htmlFor="shop">Connect a Shopify store</label>
@@ -108,6 +111,13 @@ export function Connect() {
         <section className="card form-grid" aria-labelledby="hooks-h">
           <div className="card-head" style={{ marginBottom: 0 }}><h2 id="hooks-h">2 · Courier & payments</h2><span>one-time setup</span></div>
           <p style={{ color: 'var(--rr-slate)', fontSize: 15, lineHeight: 1.55 }}>Paste these into your Shiprocket and Razorpay dashboards so ReRoute hears about failed deliveries and payments instantly.</p>
+          {me?.integrations ? (
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {(['shiprocket', 'razorpay', 'whatsapp'] as const).map((k) => (
+                <span key={k} className={`pill ${me.integrations![k] ? 'lime' : 'grey'}`}>{k[0]!.toUpperCase() + k.slice(1)} {me.integrations![k] ? '· ready' : '· not set up'}</span>
+              ))}
+            </div>
+          ) : null}
           <CopyField label="Shiprocket tracking webhook" value={`${origin}/webhooks/courier/shiprocket`} />
           <CopyField label="Razorpay webhook (payment_link.paid, .expired, .cancelled)" value={`${origin}/webhooks/razorpay`} />
           <p style={{ color: 'var(--rr-slate)', fontSize: 13.5 }}>Use the webhook secrets from your ReRoute onboarding call. Never share them in chat or email.</p>

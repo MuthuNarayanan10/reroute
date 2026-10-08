@@ -1,10 +1,11 @@
-import { env } from '../../config/env.js';
+import { env, requireConfigured } from '../../config/env.js';
 import { hmacSha256, safeEqual } from '../../lib/crypto.js';
 import { fetchJson } from '../../lib/http.js';
 
 const BASE = 'https://api.razorpay.com/v1';
 
 function authHeader(): string {
+  requireConfigured('razorpay');
   const e = env();
   return `Basic ${Buffer.from(`${e.RAZORPAY_KEY_ID}:${e.RAZORPAY_KEY_SECRET}`).toString('base64')}`;
 }
@@ -69,7 +70,7 @@ export async function refundPayment(paymentId: string, notes: Record<string, str
 
 /** Razorpay signs the raw body (hex HMAC-SHA256) in the X-Razorpay-Signature header. */
 export function verifyRazorpayWebhook(rawBody: Buffer | string, signature: string | undefined, secret: string): boolean {
-  if (!signature) return false;
+  if (!signature || !secret) return false;
   return safeEqual(hmacSha256(secret, rawBody, 'hex'), signature);
 }
 

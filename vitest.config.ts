@@ -19,6 +19,8 @@ export default defineConfig({
       WHATSAPP_TOKEN: 'wa_token',
       WHATSAPP_PHONE_NUMBER_ID: '123',
       COURIER_WEBHOOK_SECRET: 'courier_secret',
+      SHIPROCKET_EMAIL: 'ops@example.com',
+      SHIPROCKET_PASSWORD: 'test-password',
     },
   },
 });

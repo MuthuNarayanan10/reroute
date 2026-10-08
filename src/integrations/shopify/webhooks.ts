@@ -2,7 +2,7 @@ import { hmacSha256, safeEqual } from '../../lib/crypto.js';
 
 /** Shopify signs the raw request body with the app secret, base64-encoded. */
 export function verifyShopifyWebhook(rawBody: Buffer | string, hmacHeader: string | undefined, secret: string): boolean {
-  if (!hmacHeader) return false;
+  if (!hmacHeader || !secret) return false; // never accept signatures made with an empty secret
   return safeEqual(hmacSha256(secret, rawBody, 'base64'), hmacHeader);
 }
 

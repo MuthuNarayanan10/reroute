@@ -2,13 +2,14 @@
  * Seeds a realistic demo store + seller login so the dashboard can be explored without Shopify.
  *
  *   npm run seed:demo                       # demo@reroute.example / Reroute-demo-2026
+ *   node dist/cli/seed-demo.js --force      # on a hosted staging server (production build)
  *   npm run seed:demo -- --email you@x.com --password 'Something-long-1'
  *   npm run seed:demo -- --reset            # wipe and re-create the demo store
  *
  * All names and phone numbers are fake. Refuses to run with NODE_ENV=production unless --force.
  */
 import { and, eq } from 'drizzle-orm';
-import { db, closeDb } from '../src/db/client.js';
+import { db, closeDb } from '../db/client.js';
 import {
   checkouts,
   customers,
@@ -23,11 +24,11 @@ import {
   stores,
   users,
   type ShippingAddress,
-} from '../src/db/schema.js';
-import { addMember, normalizeEmail } from '../src/modules/accounts/service.js';
-import { hashPassword } from '../src/modules/accounts/password.js';
-import { scoreCodRisk, istHour } from '../src/modules/cod-prepaid/risk.js';
-import { applyDiscountBps } from '../src/lib/money.js';
+} from '../db/schema.js';
+import { addMember, normalizeEmail } from '../modules/accounts/service.js';
+import { hashPassword } from '../modules/accounts/password.js';
+import { scoreCodRisk, istHour } from '../modules/cod-prepaid/risk.js';
+import { applyDiscountBps } from '../lib/money.js';
 
 const args = process.argv.slice(2);
 const arg = (name: string, dflt: string) => {

@@ -3,7 +3,7 @@ import sensible from '@fastify/sensible';
 import rateLimit from '@fastify/rate-limit';
 import cookie from '@fastify/cookie';
 import rawBody from 'fastify-raw-body';
-import { env } from '../config/env.js';
+import { env, NotConfiguredError } from '../config/env.js';
 import { logger } from '../lib/logger.js';
 import { healthRoutes } from './routes/health.js';
 import { shopifyAuthRoutes } from './routes/shopify-auth.js';
@@ -51,6 +51,14 @@ export async function buildServer() {
     if (env().NODE_ENV === 'production') reply.header('strict-transport-security', 'max-age=31536000; includeSubDomains');
   });
 
+  // Must be set before routes are registered: Fastify error handlers are inherited at registration time.
+  app.setErrorHandler((err: Error & { statusCode?: number }, req, reply) => {
+    const status = err.statusCode && (err.statusCode < 500 || err instanceof NotConfiguredError) ? err.statusCode : 500;
+    if (status === 500) req.log.error({ err }, 'request failed');
+    // 503 = an integration isn't configured yet: the message is safe and useful to show.
+    reply.code(status).send({ error: status === 500 ? 'Something went wrong. Please try again.' : err.message });
+  });
+
   await app.register(healthRoutes);
   await app.register(shopifyAuthRoutes);
   await app.register(webhookRoutes);
@@ -58,12 +66,6 @@ export async function buildServer() {
   await app.register(accountRoutes);
   await app.register(publicRoutes);
   await app.register(webRoutes);
-
-  app.setErrorHandler((err: Error & { statusCode?: number }, req, reply) => {
-    const status = err.statusCode && err.statusCode < 500 ? err.statusCode : 500;
-    if (status >= 500) req.log.error({ err }, 'request failed');
-    reply.code(status).send({ error: status === 500 ? 'Something went wrong. Please try again.' : err.message });
-  });
 
   return app;
 }

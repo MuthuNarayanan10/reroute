@@ -23,10 +23,10 @@ async function request<T>(method: string, path: string, body?: Json): Promise<T>
   } catch {
     throw new ApiError('Can’t reach ReRoute. Check your connection and try again.', 0);
   }
-  const data = (await res.json().catch(() => ({}))) as { error?: string };
+  const data = (await res.json().catch(() => ({}))) as { error?: string; message?: string };
   if (!res.ok) {
     if (res.status === 401 && path.startsWith('/app-api/')) window.dispatchEvent(new Event('rr:unauthorized'));
-    throw new ApiError(data.error ?? `Request failed (${res.status})`, res.status);
+    throw new ApiError(data.error ?? data.message ?? `Request failed (${res.status})`, res.status);
   }
   return data as T;
 }
@@ -41,7 +41,8 @@ export const api = {
 export type Role = 'owner' | 'admin' | 'viewer';
 export interface User { id: string; email: string; name: string }
 export interface StoreSummary { id: string; name: string | null; platform: string; shopDomain: string; status: string; role: Role }
-export interface Me { user: User; stores: StoreSummary[] }
+export interface Integrations { shopify: boolean; razorpay: boolean; whatsapp: boolean; shiprocket: boolean }
+export interface Me { user: User; stores: StoreSummary[]; integrations?: Integrations }
 
 export interface StoreSettings {
   codPrepaidEnabled: boolean;

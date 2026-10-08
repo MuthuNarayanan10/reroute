@@ -4,16 +4,17 @@
  * Source: India Post "All India Pincode Directory with lat/long" (data.gov.in, Open Government Data License).
  * Download the CSV yourself and run:
  *   npm run db:seed-pincodes -- data/pincodes.csv
+ *   node dist/cli/load-pincodes.js data/pincodes.csv     (production build)
  *
  * Expected columns (case-insensitive): pincode, latitude, longitude, district, statename
  * Rows sharing a pincode (multiple post offices) are averaged into one point.
  */
 import { readFileSync } from 'node:fs';
 import { sql } from 'drizzle-orm';
-import { db, closeDb } from '../src/db/client.js';
-import { pincodes } from '../src/db/schema.js';
-import { isValidPincode } from '../src/lib/geo.js';
-import { logger } from '../src/lib/logger.js';
+import { db, closeDb } from '../db/client.js';
+import { pincodes } from '../db/schema.js';
+import { isValidPincode } from '../lib/geo.js';
+import { logger } from '../lib/logger.js';
 
 const file = process.argv[2];
 if (!file) {

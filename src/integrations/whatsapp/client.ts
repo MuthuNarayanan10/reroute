@@ -1,4 +1,4 @@
-import { env } from '../../config/env.js';
+import { env, requireConfigured } from '../../config/env.js';
 import { fetchJson } from '../../lib/http.js';
 import { toWhatsAppId } from '../../lib/phone.js';
 
@@ -19,6 +19,7 @@ export interface TemplateMessage {
  * Templates must be pre-approved in Meta Business Manager — see docs/WHATSAPP_TEMPLATES.md.
  */
 export async function sendTemplate(msg: TemplateMessage): Promise<{ messageId: string }> {
+  requireConfigured('whatsapp');
   const e = env();
   const components: unknown[] = [
     { type: 'body', parameters: msg.bodyParams.map((text) => ({ type: 'text', text })) },

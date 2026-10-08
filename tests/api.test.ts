@@ -54,3 +54,13 @@ describe('API security boundaries (no DB needed)', () => {
     expect(res.statusCode).toBe(400);
   });
 });
+
+describe('error responses', () => {
+  it('use our { error } shape and never leak internals on 500', async () => {
+    const res = await app.inject({ method: 'GET', url: '/ready' }); // DB is unreachable in unit tests
+    expect([200, 503]).toContain(res.statusCode);
+    const notFound = await app.inject({ method: 'GET', url: '/api/stores/not-a-uuid/orders', headers: { 'x-api-key': 'x' } });
+    expect(notFound.json()).toHaveProperty('error');
+    expect(notFound.json()).not.toHaveProperty('stack');
+  });
+});

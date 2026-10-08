@@ -1,6 +1,9 @@
 # ReRoute Platform
 
 The complete ReRoute product: **marketing website + seller dashboard + backend**, deployed as one app.
+
+> **New here?** Read [START-HERE.md](START-HERE.md) (where everything is) and [DEPLOY.md](DEPLOY.md) (go live step by step).
+> Backend = `src/` · Frontend = `web/`
 AI commerce platform for Indian D2C sellers. It syncs Shopify orders, converts risky COD orders to prepaid,
 recovers abandoned carts on WhatsApp — and **rescues failed deliveries** by selling the parcel to a nearby
 shopper who wanted the same product, instead of sending it back to the warehouse.

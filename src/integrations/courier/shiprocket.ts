@@ -1,4 +1,4 @@
-import { env } from '../../config/env.js';
+import { env, integrations } from '../../config/env.js';
 import { safeEqual } from '../../lib/crypto.js';
 import { fetchJson } from '../../lib/http.js';
 import type { ShippingAddress } from '../../db/schema.js';
@@ -40,7 +40,8 @@ export const shiprocketAdapter: CourierAdapter = {
     // Configure the same secret as the "token" in Shiprocket's webhook settings; it is sent as x-api-key.
     const h = headers['x-api-key'];
     const value = Array.isArray(h) ? h[0] : h;
-    return !!value && safeEqual(value, env().COURIER_WEBHOOK_SECRET);
+    const secret = env().COURIER_WEBHOOK_SECRET;
+    return !!value && !!secret && safeEqual(value, secret);
   },
 
   parseWebhook(payload): CourierEvent[] {
@@ -67,6 +68,7 @@ export const shiprocketAdapter: CourierAdapter = {
     // Uses the NDR re-attempt action with updated consignee details.
     // IMPORTANT: confirm the exact endpoint + fields with your Shiprocket account manager; consignee
     // changes on NDR shipments are typically enabled per account under a commercial agreement.
+    if (!integrations().shiprocket) return { ok: false, reason: 'Shiprocket is not configured on this server' };
     const t = await authToken();
     try {
       await fetchJson(`${BASE}/ndr/${encodeURIComponent(awb)}/action`, {

@@ -1,4 +1,4 @@
-import { env } from '../../config/env.js';
+import { env, requireConfigured } from '../../config/env.js';
 import { hmacSha256, safeEqual } from '../../lib/crypto.js';
 import { fetchJson } from '../../lib/http.js';
 
@@ -9,6 +9,7 @@ export function isValidShopDomain(shop: string | undefined): shop is string {
 }
 
 export function buildInstallUrl(shop: string, state: string): string {
+  requireConfigured('shopify');
   const e = env();
   const params = new URLSearchParams({
     client_id: e.SHOPIFY_API_KEY,
@@ -25,7 +26,7 @@ export function buildInstallUrl(shop: string, state: string): string {
  */
 export function verifyOAuthHmac(query: Record<string, string | undefined>, secret: string): boolean {
   const { hmac, signature: _signature, ...rest } = query;
-  if (!hmac) return false;
+  if (!hmac || !secret) return false; // an empty secret would make any signature forgeable
   const message = Object.keys(rest)
     .sort()
     .map((k) => `${k}=${rest[k] ?? ''}`)
@@ -34,6 +35,7 @@ export function verifyOAuthHmac(query: Record<string, string | undefined>, secre
 }
 
 export async function exchangeCodeForToken(shop: string, code: string): Promise<{ accessToken: string; scope: string }> {
+  requireConfigured('shopify');
   const e = env();
   const res = await fetchJson<{ access_token: string; scope: string }>(`https://${shop}/admin/oauth/access_token`, {
     op: 'shopify.oauth.token',

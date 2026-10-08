@@ -18,9 +18,9 @@
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/db/migrate.ts",
-    "db:seed-pincodes": "tsx scripts/load-pincodes.ts",
+    "db:seed-pincodes": "tsx src/cli/load-pincodes.ts",
     "test:integration": "INTEGRATION_DATABASE_URL=${INTEGRATION_DATABASE_URL:-postgres://reroute:reroute@localhost:5432/reroute_test} vitest run tests/*.int.test.ts",
-    "seed:demo": "tsx scripts/seed-demo.ts",
+    "seed:demo": "tsx src/cli/seed-demo.ts",
     "dev:web": "vite --config web/vite.config.ts",
     "build:web": "vite build --config web/vite.config.ts"
   },
